@@ -18,24 +18,134 @@ const LOGO_SVG = `<!-- Font Poppins, Extracted by @neytaan_art (on Instagram)  -
 </svg>
 `;
 
+const CSS = `
+    :host {
+        display: block;
+        width: {width};
+        color: {color};
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+`;
+
+const SIZES = {
+	xs: "25px",
+	sm: "35px",
+	md: "50px",
+	lg: "80px",
+	xl: "120px",
+	xxl: "250px",
+};
+
+const COLORS_LIST = [
+	//TODO Change the list
+	"currentColor",
+	"rgba(255, 178, 98, 0.75)",
+	"rgba(133, 221, 161, 0.75)",
+	"rgba(128, 165, 255, 0.75)",
+	"rgba(186, 142, 219, 0.75)",
+	"rgba(237, 106, 90, 0.75)",
+	"rgba(255, 112, 150, 0.75)",
+	"rgba(255, 255, 0, 0.75)",
+	"rgba(0, 255, 255, 0.75)",
+	"rgba(255, 0, 255, 0.75)",
+	"rgba(0, 0, 255, 0.75)",
+	"rgba(0, 255, 0, 0.75)",
+	"rgba(255, 0, 0, 0.75)",
+	"rgba(255, 255, 255, 0.75)",
+	"rgba(0, 0, 0, 0.75)",
+];
+
+const LINK = "https://nicolasrenault.com";
+
 class NR_Logo extends HTMLElement {
 	parser = null;
 	constructor() {
 		super();
 		this.parser = new DOMParser();
 		this.attachShadow({ mode: "open" });
+		this.initComponent();
 	}
 
-	connectedCallback() {
-		this.#render();
+	/**
+	 * Init the component with the logo and the link if it's set
+	 * Call the initCSS function to init the CSS and the initJavaScript function to init the animation
+	 *
+	 * @see initCSS
+	 * @see initJavaScript
+	 */
+	initComponent() {
+		//Get the logo from the LOGO_SVG constant
+		const logo = this.parser.parseFromString(
+			LOGO_SVG,
+			"image/svg+xml"
+		).documentElement;
+
+		//Get the link and the animated attributes from the attributes
+		const link = this.getAttribute("link") ?? false;
+		const animated = this.getAttribute("animated") ?? false;
+
+		let mainContainer;
+
+		//If the link is set, create an a tag with the link and the logo inside, else, just create the logo
+		if (link !== false) {
+			const a = document.createElement("a");
+			a.href = LINK;
+			a.target = "_blank";
+			a.appendChild(logo);
+			mainContainer = a;
+		} else {
+			mainContainer = logo;
+		}
+
+		//Append the mainContainer to the shadowRoot
+		this.shadowRoot.appendChild(mainContainer);
+		this.initCSS();
+
+		if (animated !== false) {
+			this.initJavaScript();
+		}
 	}
 
-	attributesChangedCallback() {
-		this.#render();
+	/**
+	 * Init the CSS with the size and the color from the attributes
+	 */
+	initCSS() {
+		//Get the size and the color from the attributes
+		const size = SIZES[this.getAttribute("size") ?? "md"];
+		const color = this.getAttribute("color") ?? "currentColor";
+
+		//Replace the {width} and {color} in the CSS with the size and the color
+		let finalCSS = CSS;
+		finalCSS = finalCSS.replace("{width}", size);
+		finalCSS = finalCSS.replaceAll("{color}", color);
+
+		//Create the style tag and append it to the shadowRoot
+		const style = document.createElement("style");
+		style.innerHTML = finalCSS;
+		this.shadowRoot.appendChild(style);
 	}
 
-	#render() {
-		this.shadowRoot.innerHTML = logo;
+	/**
+	 * Init the javascript listeners for the animation on mouseenter
+	 */
+	initJavaScript() {
+		const svg = this.shadowRoot.querySelector("svg");
+		const paths = svg.querySelectorAll("path, polygon, rect");
+		const colors = COLORS_LIST;
+
+		const getRandomColor = () => {
+			return colors[Math.floor(Math.random() * colors.length)];
+		};
+
+		paths.forEach((path) => {
+			path.addEventListener("mouseenter", () => {
+				path.style.fill = getRandomColor();
+			});
+		});
 	}
 }
 
