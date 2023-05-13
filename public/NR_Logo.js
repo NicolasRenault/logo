@@ -39,9 +39,9 @@ const SIZES = {
 	xl: "120px",
 	xxl: "250px",
 };
+const SIZE_DEFAULT = "md";
 
 const COLORS_LIST = [
-	//TODO Change the list
 	"currentColor",
 	"rgba(255, 178, 98, 0.75)",
 	"rgba(133, 221, 161, 0.75)",
@@ -55,14 +55,21 @@ const COLORS_LIST = [
 	"rgba(0, 0, 255, 0.75)",
 	"rgba(0, 255, 0, 0.75)",
 	"rgba(255, 0, 0, 0.75)",
-	"rgba(255, 255, 255, 0.75)",
-	"rgba(0, 0, 0, 0.75)",
+	"rgba(215, 215, 215, 0.75)",
+	"rgba(50, 50, 50, 0.75)",
 ];
 
-const LINK = "https://nicolasrenault.com";
+const LINK_HREF = "https://nicolasrenault.com";
+const LINK_TITLE = "Nicolas Renault";
+const LINK_TARGET = "_blank";
 
 class NR_Logo extends HTMLElement {
-	parser = null;
+	parser = undefined;
+	size = undefined;
+	color = undefined;
+	link = undefined;
+	animated = undefined;
+
 	constructor() {
 		super();
 		this.parser = new DOMParser();
@@ -84,17 +91,23 @@ class NR_Logo extends HTMLElement {
 			"image/svg+xml"
 		).documentElement;
 
-		//Get the link and the animated attributes from the attributes
-		const link = this.getAttribute("link") ?? false;
-		const animated = this.getAttribute("animated") ?? false;
+		//Get attributes from the element
+		const SIZE_ATTR = this.getAttribute("size");
+		if (SIZES[SIZE_ATTR] === undefined) {
+			this.size = SIZES[SIZE_DEFAULT];
+		} else {
+			this.size = SIZES[SIZE_ATTR];
+		}
+
+		this.color = this.getAttribute("color") ?? "currentColor";
+		this.link = this.getAttribute("link") ?? false;
+		this.animated = this.getAttribute("animated") ?? false;
 
 		let mainContainer;
 
 		//If the link is set, create an a tag with the link and the logo inside, else, just create the logo
-		if (link !== false) {
-			const a = document.createElement("a");
-			a.href = LINK;
-			a.target = "_blank";
+		if (this.link !== false) {
+			const a = this.createLink();
 			a.appendChild(logo);
 			mainContainer = a;
 		} else {
@@ -104,24 +117,17 @@ class NR_Logo extends HTMLElement {
 		//Append the mainContainer to the shadowRoot
 		this.shadowRoot.appendChild(mainContainer);
 		this.initCSS();
-
-		if (animated !== false) {
-			this.initJavaScript();
-		}
+		this.initJavaScript();
 	}
 
 	/**
 	 * Init the CSS with the size and the color from the attributes
 	 */
 	initCSS() {
-		//Get the size and the color from the attributes
-		const size = SIZES[this.getAttribute("size") ?? "md"];
-		const color = this.getAttribute("color") ?? "currentColor";
-
 		//Replace the {width} and {color} in the CSS with the size and the color
 		let finalCSS = CSS;
-		finalCSS = finalCSS.replace("{width}", size);
-		finalCSS = finalCSS.replaceAll("{color}", color);
+		finalCSS = finalCSS.replaceAll("{width}", this.size);
+		finalCSS = finalCSS.replaceAll("{color}", this.color);
 
 		//Create the style tag and append it to the shadowRoot
 		const style = document.createElement("style");
@@ -133,19 +139,34 @@ class NR_Logo extends HTMLElement {
 	 * Init the javascript listeners for the animation on mouseenter
 	 */
 	initJavaScript() {
-		const svg = this.shadowRoot.querySelector("svg");
-		const paths = svg.querySelectorAll("path, polygon, rect");
-		const colors = COLORS_LIST;
+		if (this.animated !== false) {
+			const svg = this.shadowRoot.querySelector("svg");
+			const paths = svg.querySelectorAll("path, polygon, rect");
+			const colors = COLORS_LIST;
 
-		const getRandomColor = () => {
-			return colors[Math.floor(Math.random() * colors.length)];
-		};
+			const getRandomColor = () => {
+				return colors[Math.floor(Math.random() * colors.length)];
+			};
 
-		paths.forEach((path) => {
-			path.addEventListener("mouseenter", () => {
-				path.style.fill = getRandomColor();
+			paths.forEach((path) => {
+				path.addEventListener("mouseenter", () => {
+					path.style.fill = getRandomColor();
+				});
 			});
-		});
+		}
+	}
+
+	/**
+	 * Create the link with the href, title and target from the constants
+	 *
+	 * @returns {HTMLAnchorElement}
+	 */
+	createLink() {
+		const a = document.createElement("a");
+		a.href = LINK_HREF;
+		a.title = LINK_TITLE;
+		a.target = LINK_TARGET;
+		return a;
 	}
 }
 
