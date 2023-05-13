@@ -93,7 +93,6 @@ class NR_Logo extends HTMLElement {
 
 		//Get attributes from the element
 		const SIZE_ATTR = this.getAttribute("size");
-		console.log(SIZE_ATTR);
 		if (SIZE_ATTR === null) {
 			this.size = "auto";
 		} else if (!SIZES.hasOwnProperty(SIZE_ATTR)) {
