@@ -81,3 +81,52 @@ Then you can use the component like other HTMLElement:
     ```html
     <nr-logo size="sm" color="#941245" link animated></nr-logo>
     ```
+
+## Favicon
+
+All the favicon links for sizes 16x16, 32x32, and 96x96 for light and dark color schemes.
+
+```html
+<!-- 16x16 light (default) -->
+<link
+	rel="icon"
+	href="https://cdn.nicolasrenault.com/logo/NR_logo_16x16.ico"
+	size="16x16"
+	media="(prefers-color-scheme: light)"
+/>
+<!-- 32x32 light (default) -->
+<link
+	rel="icon"
+	href="https://cdn.nicolasrenault.com/logo/NR_logo_32x32.ico"
+	size="32x32"
+	media="(prefers-color-scheme: light)"
+/>
+<!-- 96x96 light (default) -->
+<link
+	rel="icon"
+	href="https://cdn.nicolasrenault.com/logo/NR_logo_96x96.ico"
+	size="96x96"
+	media="(prefers-color-scheme: light)"
+/>
+<!-- 16x16 dark -->
+<link
+	rel="icon"
+	href="https://cdn.nicolasrenault.com/logo/NR_logo_dark_16x16.ico"
+	size="16x16"
+	media="(prefers-color-scheme: dark)"
+/>
+<!-- 32x32 dark -->
+<link
+	rel="icon"
+	href="https://cdn.nicolasrenault.com/logo/NR_logo_dark_32x32.ico"
+	size="32x32"
+	media="(prefers-color-scheme: dark)"
+/>
+<!-- 96x96 dark -->
+<link
+	rel="icon"
+	href="https://cdn.nicolasrenault.com/logo/NR_logo_dark_96x96.ico"
+	size="96x96"
+	media="(prefers-color-scheme: dark)"
+/>
+```
