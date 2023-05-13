@@ -1,3 +1,5 @@
+[![Send submodule updates to parent repo](https://github.com/NicolasRenault/logo/actions/workflows/main.yml/badge.svg)](https://github.com/NicolasRenault/logo/actions/workflows/main.yml)
+
 # Logo
 
 A collection of my logos. SVGs, WebComponent, and more.
