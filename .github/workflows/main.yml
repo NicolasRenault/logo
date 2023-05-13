@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with: 
-          repository: Nicolasenault/cdn
+          repository: NicolasRenault/cdn
           token: ${{ secrets.LOGO_ACTION_TOKEN }}
           submodules: true
 
