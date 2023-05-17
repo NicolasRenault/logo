@@ -68,6 +68,16 @@ Then you can use the component like other HTMLElement:
     <nr-logo link></nr-logo>
     ```
 
+#### Animations
+
+-   **animated**
+
+    With the option **animated** all the different parts of the logo will change color individually when the mouse hovers over it.
+
+    ```html
+    <nr-logo animated></nr-logo>
+    ```
+
 -   **rainbow**
 
     With the option **rainbow**, the logo will take the color of the rainbow when the mouse hovers over it.
@@ -76,13 +86,13 @@ Then you can use the component like other HTMLElement:
     <nr-logo rainbow></nr-logo>
     ```
 
--   mix
+#### Multiple options
 
-    You can as well mix multiple options at the same time:
+You can as well mix multiple options at the same time:
 
-    ```html
-    <nr-logo size="sm" color="#941245" link rainbow></nr-logo>
-    ```
+```html
+<nr-logo size="sm" color="#941245" link rainbow></nr-logo>
+```
 
 ## Favicon
 

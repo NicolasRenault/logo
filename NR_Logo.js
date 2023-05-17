@@ -31,9 +31,33 @@ const CSS = `
     }
 `;
 
+const SIZES = {
+	xs: "25px",
+	sm: "35px",
+	md: "50px",
+	lg: "80px",
+	xl: "120px",
+	xxl: "250px",
+};
+const SIZE_DEFAULT = "md";
+
+const LINK_HREF = "https://nicolasrenault.com";
+const LINK_TITLE = "Nicolas Renault";
+const LINK_TARGET = "_blank";
+
+const CSS_HOVER = `
+	path, rect, polygon {
+		transition: all 0.2s;
+	}
+
+	path:hover, rect:hover, polygon:hover {
+		filter: invert(40%);
+	}
+`;
+
 const CSS_RAINBOW = `
 	#NR-LOGO:hover {
-		animation: rainbow 2.5s infinite;
+		animation: rainbow 1.7s infinite;
 	}
 
 	@keyframes rainbow{
@@ -75,20 +99,6 @@ const CSS_RAINBOW = `
 		}
 	}
 `;
-
-const SIZES = {
-	xs: "25px",
-	sm: "35px",
-	md: "50px",
-	lg: "80px",
-	xl: "120px",
-	xxl: "250px",
-};
-const SIZE_DEFAULT = "md";
-
-const LINK_HREF = "https://nicolasrenault.com";
-const LINK_TITLE = "Nicolas Renault";
-const LINK_TARGET = "_blank";
 
 class NR_Logo extends HTMLElement {
 	parser = undefined;
@@ -158,6 +168,11 @@ class NR_Logo extends HTMLElement {
 		let finalCSS = CSS;
 		finalCSS = finalCSS.replaceAll("{width}", this.size);
 		finalCSS = finalCSS.replaceAll("{color}", this.color);
+
+		//If the animated attribute is set, add the hover animation CSS
+		if (this.animated !== false) {
+			finalCSS += CSS_HOVER;
+		}
 
 		//If the rainbow attribute is set, add the rainbow animation CSS
 		if (this.rainbow !== false) {
