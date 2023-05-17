@@ -41,52 +41,80 @@ const SIZES = {
 };
 const SIZE_DEFAULT = "md";
 
-const COLORS_LIST = [
-	"currentColor",
-	"rgba(255, 178, 98, 0.75)",
-	"rgba(133, 221, 161, 0.75)",
-	"rgba(128, 165, 255, 0.75)",
-	"rgba(186, 142, 219, 0.75)",
-	"rgba(237, 106, 90, 0.75)",
-	"rgba(255, 112, 150, 0.75)",
-	"rgba(255, 255, 0, 0.75)",
-	"rgba(0, 255, 255, 0.75)",
-	"rgba(255, 0, 255, 0.75)",
-	"rgba(0, 0, 255, 0.75)",
-	"rgba(0, 255, 0, 0.75)",
-	"rgba(255, 0, 0, 0.75)",
-	"rgba(215, 215, 215, 0.75)",
-	"rgba(50, 50, 50, 0.75)",
-];
-
 const LINK_HREF = "https://nicolasrenault.com";
 const LINK_TITLE = "Nicolas Renault";
 const LINK_TARGET = "_blank";
 
+const CSS_HOVER = `
+	path, rect, polygon {
+		transition: all 0.2s;
+	}
+
+	path:hover, rect:hover, polygon:hover {
+		filter: invert(40%);
+	}
+`;
+
+const CSS_RAINBOW = `
+	#NR-LOGO:hover {
+		animation: rainbow 1.7s infinite;
+	}
+
+	@keyframes rainbow{
+		100%,0%{
+			color: rgb(255,0,0);
+		}
+		8%{
+			color: rgb(255,127,0);
+		}
+		16%{
+			color: rgb(255,255,0);
+		}
+		25%{
+			color: rgb(127,255,0);
+		}
+		33%{
+			color: rgb(0,255,0);
+		}
+		41%{
+			color: rgb(0,255,127);
+		}
+		50%{
+			color: rgb(0,255,255);
+		}
+		58%{
+			color: rgb(0,127,255);
+		}
+		66%{
+			color: rgb(0,0,255);
+		}
+		75%{
+			color: rgb(127,0,255);
+		}
+		83%{
+			color: rgb(255,0,255);
+		}
+		91%{
+			color: rgb(255,0,127);
+		}
+	}
+`;
+
 class NR_Logo extends HTMLElement {
 	parser = undefined;
+	logo = undefined;
 	size = undefined;
 	color = undefined;
 	link = undefined;
 	animated = undefined;
+	rainbow = undefined;
 
 	constructor() {
 		super();
 		this.parser = new DOMParser();
-		this.attachShadow({ mode: "open" });
-		this.initComponent();
-	}
 
-	/**
-	 * Init the component with the logo and the link if it's set
-	 * Call the initCSS function to init the CSS and the initJavaScript function to init the animation
-	 *
-	 * @see initCSS
-	 * @see initJavaScript
-	 */
-	initComponent() {
 		//Get the logo from the LOGO_SVG constant
-		const logo = this.parser.parseFromString(
+		this.logo = this.parser.parseFromString(
 			LOGO_SVG,
 			"image/svg+xml"
 		).documentElement;
@@ -100,11 +128,22 @@ class NR_Logo extends HTMLElement {
 		} else {
 			this.size = SIZES[SIZE_ATTR];
 		}
-
 		this.color = this.getAttribute("color") ?? "currentColor";
 		this.link = this.getAttribute("link") ?? false;
 		this.animated = this.getAttribute("animated") ?? false;
+		this.rainbow = this.getAttribute("rainbow") ?? false;
 
+		this.attachShadow({ mode: "open" });
+
+		this.initComponent();
+	}
+
+	/**
+	 * Init the component with the logo and the link if it's set
+	 *
+	 * @see initCSS
+	 */
+	initComponent() {
 		let mainContainer;
 
 		//If the link is set, create an a tag with the link and the logo inside, else, just create the logo
@@ -113,13 +152,12 @@ class NR_Logo extends HTMLElement {
 			a.appendChild(logo);
 			mainContainer = a;
 		} else {
-			mainContainer = logo;
+			mainContainer = this.logo;
 		}
 
 		//Append the mainContainer to the shadowRoot
 		this.shadowRoot.appendChild(mainContainer);
 		this.initCSS();
-		this.initJavaScript();
 	}
 
 	/**
@@ -131,31 +169,20 @@ class NR_Logo extends HTMLElement {
 		finalCSS = finalCSS.replaceAll("{width}", this.size);
 		finalCSS = finalCSS.replaceAll("{color}", this.color);
 
+		//If the animated attribute is set, add the hover animation CSS
+		if (this.animated !== false) {
+			finalCSS += CSS_HOVER;
+		}
+
+		//If the rainbow attribute is set, add the rainbow animation CSS
+		if (this.rainbow !== false) {
+			finalCSS += CSS_RAINBOW;
+		}
+
 		//Create the style tag and append it to the shadowRoot
 		const style = document.createElement("style");
 		style.innerHTML = finalCSS;
 		this.shadowRoot.appendChild(style);
-	}
-
-	/**
-	 * Init the javascript listeners for the animation on mouseenter
-	 */
-	initJavaScript() {
-		if (this.animated !== false) {
-			const svg = this.shadowRoot.querySelector("svg");
-			const paths = svg.querySelectorAll("path, polygon, rect");
-			const colors = COLORS_LIST;
-
-			const getRandomColor = () => {
-				return colors[Math.floor(Math.random() * colors.length)];
-			};
-
-			paths.forEach((path) => {
-				path.addEventListener("mouseenter", () => {
-					path.style.fill = getRandomColor();
-				});
-			});
-		}
 	}
 
 	/**
