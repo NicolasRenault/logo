@@ -149,7 +149,7 @@ class NR_Logo extends HTMLElement {
 		//If the link is set, create an a tag with the link and the logo inside, else, just create the logo
 		if (this.link !== false) {
 			const a = this.createLink();
-			a.appendChild(logo);
+			a.appendChild(this.logo);
 			mainContainer = a;
 		} else {
 			mainContainer = this.logo;
