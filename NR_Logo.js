@@ -24,11 +24,6 @@ const CSS = `
         width: {width};
         color: {color};
     }
-
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
 `;
 
 const SIZES = {
@@ -44,6 +39,20 @@ const SIZE_DEFAULT = "md";
 const LINK_HREF = "https://nicolasrenault.com";
 const LINK_TITLE = "Nicolas Renault";
 const LINK_TARGET = "_blank";
+
+const CSS_LINK = `
+	a {
+		display: block;	
+		text-decoration: none;
+		color: inherit;
+		transition: transform 0.1s;
+		transition-timing-function: cubic-bezier(.4,0,.2,1);
+	}
+
+	a:hover {
+		transform: matrix(1, 0, 0, 1, 0, -2);
+	}
+`;
 
 const CSS_HOVER = `
 	path, rect, polygon {
@@ -168,6 +177,11 @@ class NR_Logo extends HTMLElement {
 		let finalCSS = CSS;
 		finalCSS = finalCSS.replaceAll("{width}", this.size);
 		finalCSS = finalCSS.replaceAll("{color}", this.color);
+
+		//If the link attribute is set, add the link CSS
+		if (this.link !== false) {
+			finalCSS += CSS_LINK;
+		}
 
 		//If the animated attribute is set, add the hover animation CSS
 		if (this.animated !== false) {
