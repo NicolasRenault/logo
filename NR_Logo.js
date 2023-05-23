@@ -50,7 +50,7 @@ const CSS_LINK = `
 	}
 
 	a:hover {
-		transform: matrix(1, 0, 0, 1, 0, -2);
+		transform: matrix(1, 0, 0, 1, 0, -1);
 	}
 `;
 
