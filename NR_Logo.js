@@ -109,6 +109,8 @@ const CSS_RAINBOW = `
 	}
 `;
 
+const COMMENT = "Logo of Nicolas Renault. Visit https://nicolasrenault.com";
+
 class NR_Logo extends HTMLElement {
 	parser = undefined;
 	logo = undefined;
@@ -153,6 +155,9 @@ class NR_Logo extends HTMLElement {
 	 * @see initCSS
 	 */
 	initComponent() {
+		const comment = document.createComment(COMMENT);
+		this.shadowRoot.appendChild(comment);
+
 		let mainContainer;
 
 		//If the link is set, create an a tag with the link and the logo inside, else, just create the logo
