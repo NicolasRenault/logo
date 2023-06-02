@@ -144,3 +144,14 @@ All the favicon links for sizes 16x16, 32x32, and 96x96 for light and dark color
 	media="(prefers-color-scheme: dark)"
 />
 ```
+
+# License
+<!-- https://gitthub.com/juxtopposed/realtimecolors/blob/main/README.md -->
+This project is under the CC BY-NC-ND (Creative Commons Attribution-NonCommercial-NoDerivatives) license.
+1. You must give appropriate credit, provide a link to the license, and indicate if changes were made.
+2. NonCommercial — You may not use the material for commercial purposes.
+3. If you remix, transform, or build upon the material, you may not distribute the modified material.
+
+[Read more about License](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+
+[View License](https://github.com/NicolasRenault/logo/blob/main/LICENSE.md)
