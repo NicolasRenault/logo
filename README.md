@@ -10,8 +10,6 @@ Logo and SVGs by [@neytaan_art](https://instagram.com/neytaan_art?igshid=NTc4MTI
 
 ## Webcomponent
 
----
-
 Take a look at the [Web Component Documentation](https://developer.mozilla.org/en-US/docs/Web/API/Web_components).
 
 ### Init
