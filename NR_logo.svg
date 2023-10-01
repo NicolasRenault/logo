@@ -1,5 +1,7 @@
 <!-- Font Poppins, Extracted by @neytaan_art (on Instagram)  -->
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 735.5 491.4" fill="black">
+<svg version="1.1"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 735.5 491.4">
 	<g id="N-left">
 		<rect width="119.7" height="491.4"/>
 	</g>
@@ -15,4 +17,15 @@
 	<g id="R-bottom">
 		<polygon points="498.2,305.9 600.4,491.4 735.5,491.4 622.1,296.8"/>
 	</g>
+
+	<style>
+		* {
+			fill: black:
+		}
+		@media (prefers-color-scheme: dark) {
+			* {
+				fill: white;
+			}
+		}
+	</style>
 </svg>
