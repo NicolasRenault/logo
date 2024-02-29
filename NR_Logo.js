@@ -109,6 +109,42 @@ const CSS_RAINBOW = `
 	}
 `;
 
+const CSS_LIGHT_MODE = `
+	#N-left {
+		fill: #0e4429
+	}
+	#N-middle {
+		fill: #105531
+	}
+	#N-right {
+		fill: #116b3c
+	}
+	#R-top {
+		fill: #168549
+	}
+	#R-bottom {
+		fill: #24a55c
+	}
+`;
+
+const CSS_DARK_MODE = `
+	#N-left {
+		fill: #39d353
+	}
+	#N-middle {
+		fill: #8aeb9a
+	}
+	#N-right {
+		fill: #bdf5c6
+	}
+	#R-top {
+		fill: #ddfbe1
+	}
+	#R-bottom {
+		fill: #f1fcf2
+	}
+`;
+
 const COMMENT = "Logo of Nicolas Renault. Visit https://nicolasrenault.com";
 
 class NR_Logo extends HTMLElement {
@@ -181,6 +217,18 @@ class NR_Logo extends HTMLElement {
 		//Replace the {width} and {color} in the CSS with the size and the color
 		let finalCSS = CSS;
 		finalCSS = finalCSS.replaceAll("{width}", this.size);
+
+		//If the color is set to light or dark, add the light or dark mode CSS and set the color to transparent
+		if (this.color === "light" || this.color === "dark") {
+			if (this.color === "light") {
+				finalCSS += CSS_LIGHT_MODE;
+			} else {
+				finalCSS += CSS_DARK_MODE;
+			}
+
+			this.color = "transparent";
+		}
+
 		finalCSS = finalCSS.replaceAll("{color}", this.color);
 
 		//If the link attribute is set, add the link CSS
