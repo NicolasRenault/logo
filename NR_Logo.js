@@ -145,7 +145,7 @@ const CSS_DARK_MODE = `
 	}
 `;
 
-const COMMENT = "Logo of Nicolas Renault. Visit https://nicolasrenault.com";
+const COMMENT = "Logo of Nicolas Renault by @neytaan_art. Visit https://nicolasrenault.com";
 
 class NR_Logo extends HTMLElement {
 	parser = undefined;
