@@ -1,5 +1,7 @@
-[![Send submodule updates to parent repo](https://github.com/NicolasRenault/logo/actions/workflows/main.yml/badge.svg)](https://github.com/NicolasRenault/logo/actions/workflows/main.yml) [![Netlify Status](https://api.netlify.com/api/v1/badges/62f00ad4-5a8e-4c9d-a62f-3003b31b0dfe/deploy-status)](https://app.netlify.com/sites/bucolic-beijinho-348f4b/deploys)
+[![Send submodule updates to parent repo](https://github.com/NicolasRenault/logo/actions/workflows/main.yml/badge.svg)](https://github.com/NicolasRenault/logo/actions/workflows/main.yml) 
 
+![Static Badge](https://img.shields.io/badge/Self_hosted-%236B16ED?style=for-the-badge&logo=coolify)
+![Static Badge](https://img.shields.io/badge/Mirrored_from-Forgejo-%23FB923C?style=for-the-badge&logo=forgejo)
 
 
 # Logo
